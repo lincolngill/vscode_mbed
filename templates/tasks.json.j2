@@ -1,0 +1,195 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "mbed_compile_debug",
+            "type": "shell",
+            "command": "mbed",
+            "args": [
+                "compile",
+                "--profile=debug",
+                "-t","{{ toolchain }}",
+                "-m","{{ target }}"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}/mbed-os"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            },
+        },
+        {
+            "label": "st-flash_debug",
+            "type": "shell",
+            "command": "st-flash",
+            "args":[
+                "write", "${workspaceFolder}/BUILD/{{ target }}/{{ toolchain }}/${workspaceRootFolderName}.bin", "0x8000000"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}/BUILD"
+                ],
+                "pattern": {
+                    "regexp": "^.*s+(ERROR)s+(.*)$",
+                    "severity": 1,
+                    "message": 2
+                }
+            },
+            "dependsOn": ["mbed_compile_debug"]
+        },
+        {
+            "label": "mbed_compile",
+            "type": "shell",
+            "command": "mbed",
+            "args": [
+                "compile",
+                "-t","{{ toolchain }}",
+                "-m","{{ target }}"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}/mbed-os"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            },
+        },
+        {
+            "label": "st-flash",
+            "type": "shell",
+            "command": "st-flash",
+            "args":[
+                "write", "${workspaceFolder}/BUILD/{{ target }}/{{ toolchain }}/${workspaceRootFolderName}.bin", "0x8000000"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}/BUILD"
+                ],
+                "pattern": {
+                    "regexp": "^.*s+(ERROR)s+(.*)$",
+                    "severity": 1,
+                    "message": 2
+                }
+            },
+            "dependsOn": ["mbed_compile"]
+        },
+        {
+            "label": "mbed_sterm",
+            "type": "shell",
+            "command": "mbed",
+            "args":[ "sterm", "-e", "off" ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}/BUILD"
+                ],
+                "pattern": {
+                    "regexp": "^.*s+(ERROR)s+(.*)$",
+                    "severity": 1,
+                    "message": 2
+                }
+            },
+        },
+        {
+            "label": "mbed_sterm_window",
+            "type": "process",
+            "command": "gnome-terminal",
+            "args":[
+                "--disable-factory",
+                "--hide-menubar", 
+                "--",
+                "mbed",
+                "sterm",
+                 "-e", 
+                 "off"
+                ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}/BUILD"
+                ],
+                "pattern": {
+                    "regexp": "^.*s+(ERROR)s+(.*)$",
+                    "severity": 1,
+                    "message": 2
+                }
+            },
+        }
+    ]
+}
