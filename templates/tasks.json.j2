@@ -9,9 +9,10 @@
             "command": "mbed",
             "args": [
                 "compile",
-                "--profile=debug",
+                "--profile", "mbed-os/tools/profiles/debug.json",
                 "-t","{{ toolchain }}",
-                "-m","{{ target }}"
+                "-m","{{ target }}",
+                "--build", "BUILD/debug",
             ],
             "group": "build",
             "presentation": {
@@ -42,7 +43,7 @@
             "type": "shell",
             "command": "st-flash",
             "args":[
-                "write", "${workspaceFolder}/BUILD/{{ target }}/{{ toolchain }}/${workspaceRootFolderName}.bin", "0x8000000"
+                "write", "${workspaceFolder}/BUILD/debug/${workspaceRootFolderName}.bin", "0x8000000"
             ],
             "group": "build",
             "presentation": {
@@ -56,7 +57,7 @@
                 "owner": "cpp",
                 "fileLocation": [
                     "relative",
-                    "${workspaceFolder}/BUILD"
+                    "${workspaceFolder}/BUILD/debug"
                 ],
                 "pattern": {
                     "regexp": "^.*s+(ERROR)s+(.*)$",
@@ -73,7 +74,7 @@
             "args": [
                 "compile",
                 "-t","{{ toolchain }}",
-                "-m","{{ target }}"
+                "-m","{{ target }}",
             ],
             "group": "build",
             "presentation": {

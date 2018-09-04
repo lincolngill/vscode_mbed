@@ -155,7 +155,7 @@ class Project:
             TemplateFile(self.vscodedir, filename, override=True).render(
                 toolchain=self.toolchain,
                 target=self.target,
-                openocd_args=self.openocd_args
+                openocd_args=self.openocd_args,
             )
         TemplateFile(self.projectdir,    "main.cpp",         override=False).render()
         TemplateFile(self.projectdir,    ".gitignore",       override=True).render()
